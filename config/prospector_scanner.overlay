@@ -1,0 +1,22 @@
+/*
+ * Backs Zephyr's retention-based bootmode API (bootmode_set(), used by
+ * custom_status_screen.c's on-screen bootloader button) with the nRF52840's
+ * GPREGRET1 register, following the pattern used by nrf52840dk in the
+ * Zephyr tree.
+ */
+
+&gpregret1 {
+	status = "okay";
+
+	boot_mode0: boot_mode@0 {
+		compatible = "zephyr,retention";
+		status = "okay";
+		reg = <0x0 0x1>;
+	};
+};
+
+/ {
+	chosen {
+		zephyr,boot-mode = &boot_mode0;
+	};
+};
